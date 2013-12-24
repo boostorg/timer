@@ -7,6 +7,9 @@
 
 # See library home page at http://www.boost.org/libs/timer
 
+path-constant parent : .. ;  # so that inspect will start in boost-root/libs/timer
+                             # when run from another directory, such as boost-root/status
+
 project
     : requirements
       <library>/boost/timer//boost_timer
@@ -38,7 +41,7 @@ project
      [ compile original_timer_test.cpp
      ]
      [ run /boost/tools/inspect//inspect/<variant>release
-       : .. -text -brief # command line
+       : $(parent) -text -brief # command line
        : # input files
        : <dependency>/boost/filesystem//boost_filesystem
          <test-info>always_show_run_output # requirements
