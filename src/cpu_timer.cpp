@@ -18,6 +18,7 @@
 #include <boost/io/ios_state.hpp>
 #include <boost/throw_exception.hpp>
 #include <boost/cerrno.hpp>
+#include <boost/predef.h>
 #include <cstring>
 #include <sstream>
 #include <cassert>
@@ -122,6 +123,7 @@ namespace
 
 # if defined(BOOST_WINDOWS_API)
 
+#  if BOOST_PLAT_WINDOWS_DESKTOP
     FILETIME creation, exit;
     if (::GetProcessTimes(::GetCurrentProcess(), &creation, &exit,
             (LPFILETIME)&current.system, (LPFILETIME)&current.user))
@@ -130,6 +132,7 @@ namespace
       current.system *= 100;
     }
     else
+#  endif
     {
       current.system = current.user = boost::timer::nanosecond_type(-1);
     }
