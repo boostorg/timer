@@ -1,0 +1,67 @@
+# Copyright 2016, 2017 Peter Dimov
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at http://boost.org/LICENSE_1_0.txt)
+
+language: cpp
+
+sudo: false
+
+branches:
+  only:
+    - master
+    - develop
+    - /feature\/.*/
+
+env:
+  matrix:
+    - BOGUS_JOB=true
+
+matrix:
+
+  exclude:
+    - env: BOGUS_JOB=true
+
+  include:
+    - os: linux
+      compiler: g++
+      env: TOOLSET=gcc CXXSTD=03
+
+    - os: linux
+      compiler: g++
+      env: TOOLSET=gcc CXXSTD=11
+
+    - os: linux
+      compiler: clang++
+      env: TOOLSET=clang CXXSTD=03
+
+    - os: linux
+      compiler: clang++
+      env: TOOLSET=clang CXXSTD=11
+
+    - os: osx
+      compiler: clang++
+      env: TOOLSET=clang CXXSTD=03
+
+    - os: osx
+      compiler: clang++
+      env: TOOLSET=clang CXXSTD=11
+
+install:
+  - BOOST_BRANCH=develop && [ "$TRAVIS_BRANCH" == "master" ] && BOOST_BRANCH=master || true
+  - cd ..
+  - git clone -b $BOOST_BRANCH https://github.com/boostorg/boost.git boost-root
+  - cd boost-root
+  - git submodule update --init tools/build
+  - git submodule update --init libs/config
+  - git submodule update --init tools/boostdep
+  - cp -r $TRAVIS_BUILD_DIR/* libs/timer
+  - python tools/boostdep/depinst/depinst.py timer
+  - ./bootstrap.sh
+  - ./b2 headers
+
+script:
+  - ./b2 libs/timer/test toolset=$TOOLSET cxxstd=$CXXSTD
+
+notifications:
+  email:
+    on_success: always
