@@ -251,13 +251,17 @@ namespace boost
       if (!is_stopped())
       {
         stop();  // the sooner we stop(), the better
+#ifndef BOOST_NO_EXCEPTIONS
         try
         {
+#endif
           report();
+#ifndef BOOST_NO_EXCEPTIONS
         }
         catch (...) // eat any exceptions
         {
         }
+#endif
       }
     }
 
