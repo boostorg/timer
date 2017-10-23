@@ -104,8 +104,8 @@ namespace
         tick_factor = -1;
       else
       {
-        assert(tick_factor <= 1000000000LL); // logic doesn't handle large ticks
-        tick_factor = 1000000000LL / tick_factor;  // compute factor
+        assert(tick_factor <= INT64_C(1000000000)); // logic doesn't handle large ticks
+        tick_factor = INT64_C(1000000000) / tick_factor;  // compute factor
         if (!tick_factor)
           tick_factor = -1;
       }
