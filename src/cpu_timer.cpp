@@ -13,6 +13,10 @@
 // the library is being built (possibly exporting rather than importing code)
 #define BOOST_TIMER_SOURCE
 
+// define BOOST_CHRONO_HEADER_ONLY so that chrono dependencies are not
+// propagated to library users
+#define BOOST_CHRONO_HEADER_ONLY
+
 #include <boost/timer/timer.hpp>
 #include <boost/chrono/chrono.hpp>
 #include <boost/io/ios_state.hpp>
