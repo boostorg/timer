@@ -6,6 +6,8 @@ language: cpp
 
 sudo: false
 
+python: "2.7"
+
 branches:
   only:
     - master
@@ -24,27 +26,15 @@ matrix:
   include:
     - os: linux
       compiler: g++
-      env: TOOLSET=gcc CXXSTD=03
-
-    - os: linux
-      compiler: g++
-      env: TOOLSET=gcc CXXSTD=11
+      env: TOOLSET=gcc CXXSTD=03,11
 
     - os: linux
       compiler: clang++
-      env: TOOLSET=clang CXXSTD=03
-
-    - os: linux
-      compiler: clang++
-      env: TOOLSET=clang CXXSTD=11
+      env: TOOLSET=clang CXXSTD=03,11,14,1z
 
     - os: osx
       compiler: clang++
-      env: TOOLSET=clang CXXSTD=03
-
-    - os: osx
-      compiler: clang++
-      env: TOOLSET=clang CXXSTD=11
+      env: TOOLSET=clang CXXSTD=03,11,14,1z
 
 install:
   - BOOST_BRANCH=develop && [ "$TRAVIS_BRANCH" == "master" ] && BOOST_BRANCH=master || true
