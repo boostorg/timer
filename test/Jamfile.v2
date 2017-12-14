@@ -7,6 +7,8 @@
 
 # See library home page at http://www.boost.org/libs/timer
 
+import testing ;
+
 path-constant parent : .. ;  # so that inspect will start in boost-root/libs/timer
                              # when run from another directory, such as boost-root/status
 
