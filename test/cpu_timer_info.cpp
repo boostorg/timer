@@ -13,6 +13,7 @@
 #include <cstdlib> // for atol()
 #include <iostream>
 #include <locale>
+#include <ctime>
 
 using boost::timer::nanosecond_type;
 using boost::timer::cpu_times;
@@ -46,7 +47,8 @@ int cpp_main( int argc, char * argv[] )
       cpu.start();
       start_time = cpu.elapsed();
       current_time.user = start_time.user;
-      while (current_time.user == start_time.user)
+      std::time_t tm = std::time( 0 );
+      while( current_time.user == start_time.user && std::time( 0 ) < tm + 3 )
       {
         current_time = cpu.elapsed();
       }
@@ -58,12 +60,13 @@ int cpp_main( int argc, char * argv[] )
     cpu_timer cpu;
     cout << "measure boost::timer::cpu_timer resolution for wall-clock time..."
               << endl;
-    for (int i = 0; i < 100; ++i)
+    for (int i = 0; i < 50; ++i)
     {
       cpu.start();
       start_time.wall = cpu.elapsed().wall;
       current_time.wall = start_time.wall;
-      while (current_time.wall == start_time.wall)
+      std::time_t tm = std::time( 0 );
+      while( current_time.wall == start_time.wall && std::time( 0 ) < tm + 3 )
       {
         current_time.wall = cpu.elapsed().wall;
       }
