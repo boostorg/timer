@@ -15,7 +15,6 @@ path-constant parent : .. ;  # so that inspect will start in boost-root/libs/tim
 project
     : requirements
       <library>/boost/timer//boost_timer
-      <toolset>msvc:<asynch-exceptions>on
     ;
  
    test-suite "timer"
