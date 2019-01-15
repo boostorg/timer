@@ -122,7 +122,7 @@ namespace
 
 # if defined(BOOST_WINDOWS_API)
 
-#  if BOOST_PLAT_WINDOWS_DESKTOP
+#  if BOOST_PLAT_WINDOWS_DESKTOP || defined(__CYGWIN__)
     FILETIME creation, exit;
     if (::GetProcessTimes(::GetCurrentProcess(), &creation, &exit,
             (LPFILETIME)&current.system, (LPFILETIME)&current.user))
