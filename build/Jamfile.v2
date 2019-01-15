@@ -11,7 +11,6 @@ project boost/timer
     : source-location ../src
     : requirements
       <library>/boost/chrono//boost_chrono
-      <library>/boost/system//boost_system
     : usage-requirements  # pass these requirement to dependants (i.e. users)
       <link>shared:<define>BOOST_TIMER_DYN_LINK=1
       <link>static:<define>BOOST_TIMER_STATIC_LINK=1
