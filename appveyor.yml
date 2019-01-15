@@ -50,7 +50,7 @@ install:
   - xcopy /s /e /q %APPVEYOR_BUILD_FOLDER% libs\timer\
   - python tools/boostdep/depinst/depinst.py timer
   - git submodule update --init tools/inspect
-  - python tools/boostdep/depinst/depinst.py ../tools/inspect
+  - python tools/boostdep/depinst/depinst.py -I . ../tools/inspect
   - cmd /c bootstrap
   - b2 headers
 

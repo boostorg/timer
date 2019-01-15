@@ -133,7 +133,7 @@ install:
   - cp -r $TRAVIS_BUILD_DIR/* libs/timer
   - python tools/boostdep/depinst/depinst.py timer
   - git submodule update --init tools/inspect
-  - python tools/boostdep/depinst/depinst.py ../tools/inspect
+  - python tools/boostdep/depinst/depinst.py -I . ../tools/inspect
   - ./bootstrap.sh
   - ./b2 headers
 
