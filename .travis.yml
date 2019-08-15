@@ -47,6 +47,16 @@ matrix:
             - ubuntu-toolchain-r-test
 
     - os: linux
+      compiler: g++-4.8
+      env: TOOLSET=gcc CXXSTD=03,11
+      addons:
+        apt:
+          packages:
+            - g++-4.8
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - os: linux
       compiler: g++-5
       env: TOOLSET=gcc CXXSTD=03,11,14,1z
       addons:
@@ -87,12 +97,22 @@ matrix:
             - ubuntu-toolchain-r-test
 
     - os: linux
-      compiler: g++-8
+      compiler: g++-9
+      env: TOOLSET=gcc CXXSTD=03,11,14,17,2a
+      addons:
+        apt:
+          packages:
+            - g++-9
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - os: linux
+      compiler: g++-9
       env: UBSAN=1 TOOLSET=gcc CXXSTD=03,11,14,17,2a UBSAN_OPTIONS=print_stacktrace=1 LINKFLAGS=-fuse-ld=gold
       addons:
         apt:
           packages:
-            - g++-8
+            - g++-9
           sources:
             - ubuntu-toolchain-r-test
 
@@ -105,6 +125,7 @@ matrix:
       env: UBSAN=1 TOOLSET=clang CXXSTD=03,11,14,1z UBSAN_OPTIONS=print_stacktrace=1
 
     - os: linux
+      dist: trusty
       compiler: clang++-libc++
       env: TOOLSET=clang CXXSTD=03,11,14,1z
       addons:
@@ -113,6 +134,7 @@ matrix:
             - libc++-dev
 
     - os: linux
+      dist: trusty
       compiler: clang++-libc++
       env: UBSAN=1 TOOLSET=clang CXXSTD=03,11,14,1z UBSAN_OPTIONS=print_stacktrace=1
       addons:
