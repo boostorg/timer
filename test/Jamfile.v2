@@ -27,5 +27,7 @@ run ../example/timex.cpp : echo "Hello, world" : : <test-info>always_show_run_ou
 compile original_timer_test.cpp ;
 run chrono_conflict_test.cpp /boost/chrono//boost_chrono : : : <link>static ;
 
+run progress_display_test.cpp ;
+
 run /boost/tools/inspect//inspect/<variant>release : $(parent) -text -brief : : <test-info>always_show_run_output : inspect ;
 explicit inspect ;
