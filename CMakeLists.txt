@@ -1,0 +1,48 @@
+# Copyright 2018, 2019 Peter Dimov
+# Distributed under the Boost Software License, Version 1.0.
+# See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
+
+# Partial and experimental CMake support
+# Subject to change; please do not rely on the contents of this file yet
+
+cmake_minimum_required(VERSION 3.5...3.16)
+
+project(boost_timer VERSION "${BOOST_SUPERPROJECT_VERSION}" LANGUAGES CXX)
+
+add_library(boost_timer
+    src/auto_timers_construction.cpp
+    src/cpu_timer.cpp
+)
+
+add_library(Boost::timer ALIAS boost_timer)
+
+target_include_directories(boost_timer
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+)
+
+target_compile_definitions(boost_timer
+    PUBLIC
+        BOOST_TIMER_NO_LIB
+        $<$<STREQUAL:$<TARGET_PROPERTY:boost_timer,TYPE>,SHARED_LIBRARY>:BOOST_TIMER_DYN_LINK=1>
+        $<$<STREQUAL:$<TARGET_PROPERTY:boost_timer,TYPE>,STATIC_LIBRARY>:BOOST_TIMER_STATIC_LINK=1>
+)
+
+target_link_libraries(boost_timer
+    PUBLIC
+        Boost::config
+        Boost::core
+        Boost::system
+    PRIVATE
+        Boost::chrono
+        Boost::io
+        Boost::predef
+        Boost::throw_exception
+)
+
+if(BUILD_TESTING)
+
+    add_subdirectory(test)
+
+endif()
