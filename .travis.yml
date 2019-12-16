@@ -159,6 +159,7 @@ install:
   - git clone -b $BOOST_BRANCH https://github.com/boostorg/boost.git boost-root
   - cd boost-root
   - git submodule update --init tools/boostdep
+  - git submodule update --init tools/cmake
   - cp -r $TRAVIS_BUILD_DIR/* libs/timer
   - python tools/boostdep/depinst/depinst.py timer
   - ./bootstrap.sh
