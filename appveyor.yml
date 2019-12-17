@@ -23,6 +23,14 @@ environment:
       TOOLSET: msvc-14.1
       CXXSTD: 14,17
       ADDRMD: 32,64
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      TOOLSET: clang-win
+      CXXSTD: 14,17
+      ADDRMD: 64
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      TOOLSET: msvc-14.2
+      CXXSTD: 14,17
+      ADDRMD: 32,64
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       ADDPATH: C:\cygwin\bin;
       TOOLSET: gcc
@@ -39,6 +47,12 @@ environment:
       ADDPATH: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin;
       TOOLSET: gcc
       CXXSTD: 03,11,14,1z
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      CMAKE: 1
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      CMAKE: 1
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      CMAKE: 1
 
 install:
   - set BOOST_BRANCH=develop
@@ -58,4 +72,20 @@ test_script:
   - PATH=%ADDPATH%%PATH%
   - if not "%CXXSTD%" == "" set CXXSTD=cxxstd=%CXXSTD%
   - if not "%ADDRMD%" == "" set ADDRMD=address-model=%ADDRMD%
-  - b2 -j3 -l120 --verbose-test libs/timer/test toolset=%TOOLSET% %CXXSTD% %ADDRMD% variant=debug,release
+  - if "%CMAKE%" == ""  b2 -j3 -l120 --verbose-test libs/timer/test toolset=%TOOLSET% %CXXSTD% %ADDRMD% variant=debug,release
+
+  - if not "%CMAKE%" == ""  mkdir __build_static && cd __build_static
+  - if not "%CMAKE%" == ""  cmake -DBOOST_ENABLE_CMAKE=1 -DBoost_VERBOSE=1 ..
+  - if not "%CMAKE%" == ""  cmake --build . --config Debug && ctest --output-on-failure -R boost_timer -C Debug
+  - if not "%CMAKE%" == ""  cmake --build . --config Release && ctest --output-on-failure -R boost_timer -C Release
+  - if not "%CMAKE%" == ""  cmake --build . --config MinSizeRel && ctest --output-on-failure -R boost_timer -C MinSizeRel
+  - if not "%CMAKE%" == ""  cmake --build . --config RelWithDebInfo && ctest --output-on-failure -R boost_timer -C RelWithDebInfo
+
+  - if not "%CMAKE%" == ""  cd ..
+
+  - if not "%CMAKE%" == ""  mkdir __build_shared && cd __build_shared
+  - if not "%CMAKE%" == ""  cmake -DBOOST_ENABLE_CMAKE=1 -DBoost_VERBOSE=1 -DBUILD_SHARED_LIBS=ON ..
+  - if not "%CMAKE%" == ""  cmake --build . --config Debug && ctest --output-on-failure -R boost_timer -C Debug
+  - if not "%CMAKE%" == ""  cmake --build . --config Release && ctest --output-on-failure -R boost_timer -C Release
+  - if not "%CMAKE%" == ""  cmake --build . --config MinSizeRel && ctest --output-on-failure -R boost_timer -C MinSizeRel
+  - if not "%CMAKE%" == ""  cmake --build . --config RelWithDebInfo && ctest --output-on-failure -R boost_timer -C RelWithDebInfo
