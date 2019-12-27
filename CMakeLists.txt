@@ -16,17 +16,12 @@ add_library(boost_timer
 
 add_library(Boost::timer ALIAS boost_timer)
 
-target_include_directories(boost_timer
-    PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:include>
-)
+target_include_directories(boost_timer PUBLIC include)
 
 target_compile_definitions(boost_timer
     PUBLIC
         BOOST_TIMER_NO_LIB
-        $<$<STREQUAL:$<TARGET_PROPERTY:boost_timer,TYPE>,SHARED_LIBRARY>:BOOST_TIMER_DYN_LINK=1>
-        $<$<STREQUAL:$<TARGET_PROPERTY:boost_timer,TYPE>,STATIC_LIBRARY>:BOOST_TIMER_STATIC_LINK=1>
+        $<IF:$<BOOL:${BUILD_SHARED_LIBS}>,BOOST_TIMER_DYN_LINK=1,BOOST_TIMER_STATIC_LINK=1>
 )
 
 target_link_libraries(boost_timer
