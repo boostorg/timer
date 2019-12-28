@@ -19,21 +19,26 @@ add_library(Boost::timer ALIAS boost_timer)
 target_include_directories(boost_timer PUBLIC include)
 
 target_compile_definitions(boost_timer
-    PUBLIC
-        BOOST_TIMER_NO_LIB
-        $<IF:$<BOOL:${BUILD_SHARED_LIBS}>,BOOST_TIMER_DYN_LINK=1,BOOST_TIMER_STATIC_LINK=1>
+  PUBLIC
+    BOOST_TIMER_NO_LIB
 )
 
+if(${BUILD_SHARED_LIBS})
+  target_compile_definitions(boost_timer PUBLIC BOOST_TIMER_DYN_LINK)
+else()
+  target_compile_definitions(boost_timer PUBLIC BOOST_TIMER_STATIC_LINK)
+endif()
+
 target_link_libraries(boost_timer
-    PUBLIC
-        Boost::config
-        Boost::core
-        Boost::system
-    PRIVATE
-        Boost::chrono
-        Boost::io
-        Boost::predef
-        Boost::throw_exception
+  PUBLIC
+    Boost::config
+    Boost::core
+    Boost::system
+  PRIVATE
+    Boost::chrono
+    Boost::io
+    Boost::predef
+    Boost::throw_exception
 )
 
 if(BUILD_TESTING)
