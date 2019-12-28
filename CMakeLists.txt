@@ -23,7 +23,7 @@ target_compile_definitions(boost_timer
     BOOST_TIMER_NO_LIB
 )
 
-if(${BUILD_SHARED_LIBS})
+if(BUILD_SHARED_LIBS)
   target_compile_definitions(boost_timer PUBLIC BOOST_TIMER_DYN_LINK)
 else()
   target_compile_definitions(boost_timer PUBLIC BOOST_TIMER_STATIC_LINK)
