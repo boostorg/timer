@@ -34,7 +34,6 @@
 
 using boost::timer::nanosecond_type;
 using boost::timer::cpu_times;
-using boost::system::error_code;
 
 namespace
 {
