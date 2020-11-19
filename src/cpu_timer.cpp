@@ -94,10 +94,10 @@ namespace
   }
 
 # if defined(BOOST_POSIX_API)
-  boost::int_least64_t tick_factor() // multiplier to convert ticks
-                                     //  to nanoseconds; -1 if unknown
+
+  boost::int_least64_t tick_factor_()
   {
-    static boost::int_least64_t tick_factor = 0;
+    boost::int_least64_t tick_factor = 0;
     if (!tick_factor)
     {
       if ((tick_factor = ::sysconf(_SC_CLK_TCK)) <= 0)
@@ -111,6 +111,14 @@ namespace
     }
     return tick_factor;
   }
+
+  boost::int_least64_t tick_factor() // multiplier to convert ticks
+                                     //  to nanoseconds; -1 if unknown
+  {
+    static boost::int_least64_t tf = tick_factor_();
+    return tf;
+  }
+
 # endif
 
   void get_cpu_times(boost::timer::cpu_times& current)
