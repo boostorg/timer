@@ -97,19 +97,13 @@ namespace
 
   boost::int_least64_t tick_factor_()
   {
-    boost::int_least64_t tick_factor = 0;
-    if (!tick_factor)
-    {
-      if ((tick_factor = ::sysconf(_SC_CLK_TCK)) <= 0)
-        tick_factor = -1;
-      else
-      {
-        tick_factor = INT64_C(1000000000) / tick_factor;  // compute factor
-        if (!tick_factor)
-          tick_factor = -1;
-      }
-    }
-    return tick_factor;
+    boost::int_least64_t tf = ::sysconf( _SC_CLK_TCK );
+    if( tf <= 0 ) return -1;
+
+    tf = INT64_C(1000000000) / tf;  // compute factor
+    if( tf == 0 ) tf = -1;
+
+    return tf;
   }
 
   boost::int_least64_t tick_factor() // multiplier to convert ticks
