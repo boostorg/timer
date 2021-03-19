@@ -150,7 +150,14 @@ matrix:
       env: CMAKE=1
       script:
         - mkdir __build__ && cd __build__
-        - cmake -DBOOST_ENABLE_CMAKE=1 -DBoost_VERBOSE=1 -DBOOST_INCLUDE_LIBRARIES=timer ..
+        - cmake -DBOOST_ENABLE_CMAKE=1 -DBUILD_TESTING=ON -DBoost_VERBOSE=1 -DBOOST_INCLUDE_LIBRARIES=timer ..
+        - ctest --output-on-failure -R boost_timer
+
+    - os: linux
+      env: CMAKE=1 BUILD_SHARED_LIBS=ON
+      script:
+        - mkdir __build__ && cd __build__
+        - cmake -DBOOST_ENABLE_CMAKE=1 -DBUILD_TESTING=ON -DBoost_VERBOSE=1 -DBOOST_INCLUDE_LIBRARIES=timer -DBUILD_SHARED_LIBS=ON ..
         - ctest --output-on-failure -R boost_timer
 
 install:
