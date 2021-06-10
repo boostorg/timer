@@ -77,17 +77,17 @@ test_script:
   - if "%CMAKE%" == ""  b2 -j3 -l120 --verbose-test libs/timer/test toolset=%TOOLSET% %CXXSTD% %ADDRMD% variant=debug,release
 
   - if not "%CMAKE%" == ""  mkdir __build_static && cd __build_static
-  - if not "%CMAKE%" == ""  cmake -DBOOST_ENABLE_CMAKE=1 -DBUILD_TESTING=ON -DBoost_VERBOSE=1 -DBOOST_INCLUDE_LIBRARIES=timer ..
-  - if not "%CMAKE%" == ""  cmake --build . --config Debug && ctest --output-on-failure -R boost_timer -C Debug
-  - if not "%CMAKE%" == ""  cmake --build . --config Release && ctest --output-on-failure -R boost_timer -C Release
-  - if not "%CMAKE%" == ""  cmake --build . --config MinSizeRel && ctest --output-on-failure -R boost_timer -C MinSizeRel
-  - if not "%CMAKE%" == ""  cmake --build . --config RelWithDebInfo && ctest --output-on-failure -R boost_timer -C RelWithDebInfo
+  - if not "%CMAKE%" == ""  cmake -DBUILD_TESTING=ON -DBOOST_INCLUDE_LIBRARIES=timer ..
+  - if not "%CMAKE%" == ""  cmake --build tests --config Debug && ctest --output-on-failure -C Debug
+  - if not "%CMAKE%" == ""  cmake --build tests --config Release && ctest --output-on-failure -C Release
+  - if not "%CMAKE%" == ""  cmake --build tests --config MinSizeRel && ctest --output-on-failure -C MinSizeRel
+  - if not "%CMAKE%" == ""  cmake --build tests --config RelWithDebInfo && ctest --output-on-failure -C RelWithDebInfo
 
   - if not "%CMAKE%" == ""  cd ..
 
   - if not "%CMAKE%" == ""  mkdir __build_shared && cd __build_shared
-  - if not "%CMAKE%" == ""  cmake -DBOOST_ENABLE_CMAKE=1 -DBUILD_TESTING=ON -DBoost_VERBOSE=1 -DBOOST_INCLUDE_LIBRARIES=timer -DBUILD_SHARED_LIBS=ON ..
-  - if not "%CMAKE%" == ""  cmake --build . --config Debug && ctest --output-on-failure -R boost_timer -C Debug
-  - if not "%CMAKE%" == ""  cmake --build . --config Release && ctest --output-on-failure -R boost_timer -C Release
-  - if not "%CMAKE%" == ""  cmake --build . --config MinSizeRel && ctest --output-on-failure -R boost_timer -C MinSizeRel
-  - if not "%CMAKE%" == ""  cmake --build . --config RelWithDebInfo && ctest --output-on-failure -R boost_timer -C RelWithDebInfo
+  - if not "%CMAKE%" == ""  cmake -DBUILD_TESTING=ON -DBOOST_INCLUDE_LIBRARIES=timer -DBUILD_SHARED_LIBS=ON ..
+  - if not "%CMAKE%" == ""  cmake --build tests --config Debug && ctest --output-on-failure -C Debug
+  - if not "%CMAKE%" == ""  cmake --build tests --config Release && ctest --output-on-failure -C Release
+  - if not "%CMAKE%" == ""  cmake --build tests --config MinSizeRel && ctest --output-on-failure -C MinSizeRel
+  - if not "%CMAKE%" == ""  cmake --build tests --config RelWithDebInfo && ctest --output-on-failure -C RelWithDebInfo
