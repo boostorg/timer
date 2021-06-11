@@ -150,15 +150,17 @@ matrix:
       env: CMAKE=1
       script:
         - mkdir __build__ && cd __build__
-        - cmake -DBOOST_ENABLE_CMAKE=1 -DBUILD_TESTING=ON -DBoost_VERBOSE=1 -DBOOST_INCLUDE_LIBRARIES=timer ..
-        - ctest --output-on-failure -R boost_timer
+        - cmake -DBUILD_TESTING=ON -DBOOST_INCLUDE_LIBRARIES=timer ..
+        - cmake --build . --target tests
+        - ctest --output-on-failure --no-tests=error
 
     - os: linux
       env: CMAKE=1 BUILD_SHARED_LIBS=ON
       script:
         - mkdir __build__ && cd __build__
-        - cmake -DBOOST_ENABLE_CMAKE=1 -DBUILD_TESTING=ON -DBoost_VERBOSE=1 -DBOOST_INCLUDE_LIBRARIES=timer -DBUILD_SHARED_LIBS=ON ..
-        - ctest --output-on-failure -R boost_timer
+        - cmake -DBUILD_TESTING=ON -DBOOST_INCLUDE_LIBRARIES=timer -DBUILD_SHARED_LIBS=ON ..
+        - cmake --build . --target tests
+        - ctest --output-on-failure --no-tests=error
 
 install:
   - BOOST_BRANCH=develop && [ "$TRAVIS_BRANCH" == "master" ] && BOOST_BRANCH=master || true
