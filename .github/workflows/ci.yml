@@ -339,6 +339,7 @@ jobs:
           cd ../boost-root/libs/$LIBRARY/test/cmake_install_test && mkdir __build__ && cd __build__
           cmake -DCMAKE_INSTALL_PREFIX=~/.local ..
           cmake --build .
+          export LD_LIBRARY_PATH=$HOME/.local/lib:$LD_LIBRARY_PATH
           ctest --output-on-failure --no-tests=error
 
   posix-cmake-test:
