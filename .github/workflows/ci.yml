@@ -324,6 +324,11 @@ jobs:
           mkdir __build__ && cd __build__
           cmake -DBOOST_INCLUDE_LIBRARIES=$LIBRARY -DCMAKE_INSTALL_PREFIX=~/.local -DBUILD_SHARED_LIBS=${{matrix.shared}} ..
 
+      - name: Build
+        run: |
+          cd ../boost-root/__build__
+          cmake --build .
+
       - name: Install
         run: |
           cd ../boost-root/__build__
