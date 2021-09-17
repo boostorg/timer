@@ -36,7 +36,7 @@ set(deps
   mp11
 )
 
-foreach(dep IN_LISTS deps)
+foreach(dep IN LISTS deps)
 
   add_subdirectory(../../../${dep} boostorg/${dep})
 
