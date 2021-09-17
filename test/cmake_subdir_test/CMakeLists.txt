@@ -7,14 +7,40 @@ cmake_minimum_required(VERSION 3.5...3.20)
 project(cmake_subdir_test LANGUAGES CXX)
 
 add_subdirectory(../.. boostorg/timer)
-add_subdirectory(../../../assert boostorg/assert)
-add_subdirectory(../../../config boostorg/config)
-add_subdirectory(../../../core boostorg/core)
-add_subdirectory(../../../mp11 boostorg/mp11)
-add_subdirectory(../../../predef boostorg/predef)
-add_subdirectory(../../../throw_exception boostorg/throw_exception)
-add_subdirectory(../../../variant2 boostorg/variant2)
-add_subdirectory(../../../winapi boostorg/winapi)
+
+set(deps
+
+  # Primary dependencies
+  chrono
+  config
+  core
+  io
+  predef
+  system
+  throw_exception
+
+  # Secondary dependencies
+  assert
+  integer
+  move
+  mpl
+  ratio
+  static_assert
+  type_traits
+  typeof
+  utility
+  winapi
+  variant2
+  preprocessor
+  rational
+  mp11
+)
+
+foreach(dep IN_LISTS deps)
+
+  add_subdirectory(../../../${dep} boostorg/${dep})
+
+endforeach()
 
 add_executable(main main.cpp)
 target_link_libraries(main Boost::timer Boost::core)
