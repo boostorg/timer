@@ -34,7 +34,7 @@ jobs:
             os: ubuntu-18.04
           - toolset: gcc-8
             cxxstd: "03,11,14,17,2a"
-            os: ubuntu-18.04
+            os: ubuntu-20.04
             install: g++-8
           - toolset: gcc-9
             cxxstd: "03,11,14,17,2a"
@@ -45,8 +45,11 @@ jobs:
             install: g++-10
           - toolset: gcc-11
             cxxstd: "03,11,14,17,2a"
-            os: ubuntu-20.04
-            install: g++-11
+            os: ubuntu-22.04
+          - toolset: gcc-12
+            cxxstd: "03,11,14,17,20,2b"
+            os: ubuntu-22.04
+            install: g++-12
           - toolset: clang
             compiler: clang++-3.9
             cxxstd: "03,11,14"
@@ -98,8 +101,18 @@ jobs:
             os: ubuntu-20.04
             install: clang-12
           - toolset: clang
+            compiler: clang++-13
+            cxxstd: "03,11,14,17,20,2b"
+            os: ubuntu-22.04
+            install: clang-13
+          - toolset: clang
+            compiler: clang++-14
+            cxxstd: "03,11,14,17,20,2b"
+            os: ubuntu-22.04
+            install: clang-14
+          - toolset: clang
             cxxstd: "03,11,14,17,2a"
-            os: macos-11
+            os: macos-latest
 
     runs-on: ${{matrix.os}}
 
@@ -147,15 +160,19 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - toolset: msvc-14.1
-            cxxstd: "14,17,latest"
+          - toolset: msvc-14.0
+            cxxstd: "14,latest"
             addrmd: 32,64
-            os: windows-2016
+            os: windows-2019
           - toolset: msvc-14.2
-            cxxstd: "14,17,latest"
+            cxxstd: "14,17,20,latest"
             addrmd: 32,64
             os: windows-2019
           - toolset: msvc-14.3
+            cxxstd: "14,17,20,latest"
+            addrmd: 32,64
+            os: windows-2022
+          - toolset: clang-win
             cxxstd: "14,17,latest"
             addrmd: 32,64
             os: windows-2022
@@ -195,24 +212,20 @@ jobs:
         shell: cmd
         run: |
           cd ../boost-root
-          b2 -j3 libs/%LIBRARY%/test toolset=${{matrix.toolset}} cxxstd=${{matrix.cxxstd}} address-model=${{matrix.addrmd}} variant=debug,release
+          b2 -j3 libs/%LIBRARY%/test toolset=${{matrix.toolset}} cxxstd=${{matrix.cxxstd}} address-model=${{matrix.addrmd}} variant=debug,release embed-manifest-via=linker
 
   posix-cmake-subdir:
     strategy:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-18.04
+          - os: ubuntu-latest
             shared: OFF
-          - os: ubuntu-18.04
+          - os: ubuntu-latest
             shared: ON
-          - os: ubuntu-20.04
+          - os: macos-latest
             shared: OFF
-          - os: ubuntu-20.04
-            shared: ON
-          - os: macos-11
-            shared: OFF
-          - os: macos-11
+          - os: macos-latest
             shared: ON
 
     runs-on: ${{matrix.os}}
@@ -257,17 +270,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-18.04
+          - os: ubuntu-latest
             shared: OFF
-          - os: ubuntu-18.04
+          - os: ubuntu-latest
             shared: ON
-          - os: ubuntu-20.04
+          - os: macos-latest
             shared: OFF
-          - os: ubuntu-20.04
-            shared: ON
-          - os: macos-11
-            shared: OFF
-          - os: macos-11
+          - os: macos-latest
             shared: ON
 
     runs-on: ${{matrix.os}}
@@ -328,17 +337,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-18.04
+          - os: ubuntu-latest
             shared: OFF
-          - os: ubuntu-18.04
+          - os: ubuntu-latest
             shared: ON
-          - os: ubuntu-20.04
+          - os: macos-latest
             shared: OFF
-          - os: ubuntu-20.04
-            shared: ON
-          - os: macos-11
-            shared: OFF
-          - os: macos-11
+          - os: macos-latest
             shared: ON
 
     runs-on: ${{matrix.os}}
