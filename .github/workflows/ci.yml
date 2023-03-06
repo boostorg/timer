@@ -448,12 +448,8 @@ jobs:
         include:
           - os: windows-2019
             shared: OFF
-          - os: windows-2019
-            shared: ON
           - os: windows-2022
             shared: OFF
-          - os: windows-2022
-            shared: ON
 
     runs-on: ${{matrix.os}}
 
@@ -560,6 +556,7 @@ jobs:
           cd ../boost-root/libs/%LIBRARY%/test/cmake_install_test && mkdir __build__ && cd __build__
           cmake -DCMAKE_INSTALL_PREFIX=C:/cmake-prefix ..
           cmake --build . --config Debug
+          PATH C:\cmake-prefix\bin;%PATH%
           ctest --output-on-failure --no-tests=error -C Debug
 
       - name: Use the installed library (Release)
@@ -567,6 +564,7 @@ jobs:
         run: |
           cd ../boost-root/libs/%LIBRARY%/test/cmake_install_test/__build__
           cmake --build . --config Release
+          PATH C:\cmake-prefix\bin;%PATH%
           ctest --output-on-failure --no-tests=error -C Release
 
   windows-cmake-test:
