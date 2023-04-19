@@ -12,8 +12,6 @@
 
 #include <boost/config.hpp>
 
-#include <boost/system/api_config.hpp> 
-
 // This header implements separate compilation features as described in
 // http://www.boost.org/more/separate_compilation.html
 
