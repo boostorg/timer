@@ -15,7 +15,6 @@
 
 #include <boost/timer/timer.hpp>
 #include <boost/io/ios_state.hpp>
-#include <boost/throw_exception.hpp>
 #include <boost/predef.h>
 #include <boost/config.hpp>
 #include <cstring>
