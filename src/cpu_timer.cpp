@@ -14,10 +14,10 @@
 #define BOOST_TIMER_SOURCE
 
 #include <boost/timer/timer.hpp>
-#include <boost/chrono/chrono.hpp>
 #include <boost/io/ios_state.hpp>
 #include <boost/throw_exception.hpp>
 #include <boost/predef.h>
+#include <boost/config.hpp>
 #include <cstring>
 #include <sstream>
 #include <cassert>
@@ -92,12 +92,31 @@ namespace
 
 #if defined(_WIN32)
 
+boost::long_long_type query_performance_frequency()
+{
+    LARGE_INTEGER li;
+    ::QueryPerformanceFrequency( &li ); // never fails
+
+    return li.QuadPart;
+}
+
 void get_cpu_times( boost::timer::cpu_times& current )
 {
-    boost::chrono::duration<boost::int64_t, boost::nano>
-        x( boost::chrono::high_resolution_clock::now().time_since_epoch() );
+    static const boost::long_long_type freq = query_performance_frequency();
 
-    current.wall = x.count();
+    LARGE_INTEGER li;
+    ::QueryPerformanceCounter( &li ); // never fails
+
+    boost::long_long_type ctr = li.QuadPart;
+
+    boost::long_long_type const nano = INT64_C( 1000000000 ); // ns
+
+    // ctr * nano / freq, but with less overflow
+
+    boost::long_long_type whole = (ctr / freq) * nano;
+    boost::long_long_type part  = (ctr % freq) * nano / freq;
+
+    current.wall = whole + part;
     current.user = boost::timer::nanosecond_type( -1 );
     current.system = boost::timer::nanosecond_type( -1 );
 
