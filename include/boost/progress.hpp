@@ -19,6 +19,10 @@
 #ifndef BOOST_PROGRESS_HPP
 #define BOOST_PROGRESS_HPP
 
+#if !defined(BOOST_TIMER_ENABLE_DEPRECATED)
+# error This header is deprecated and will be removed. (You can define BOOST_TIMER_ENABLE_DEPRECATED to suppress this error.)
+#endif
+
 #include <boost/config/header_deprecated.hpp>
 BOOST_HEADER_DEPRECATED( "the facilities in <boost/timer/timer.hpp> or <boost/timer/progress_display.hpp>" )
 
