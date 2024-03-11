@@ -7,8 +7,6 @@
 
 # See library home page at http://www.boost.org/libs/timer
 
-project boost/timer ;
-
 SOURCES = auto_timers_construction cpu_timer ;
 
 lib boost_timer
@@ -21,5 +19,3 @@ lib boost_timer
      <link>shared:<define>BOOST_TIMER_DYN_LINK=1
      <link>static:<define>BOOST_TIMER_STATIC_LINK=1
    ;
-
-boost-install boost_timer ;
