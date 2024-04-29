@@ -18,4 +18,5 @@ lib boost_timer
    : # usage-requirements
      <link>shared:<define>BOOST_TIMER_DYN_LINK=1
      <link>static:<define>BOOST_TIMER_STATIC_LINK=1
+     <define>BOOST_TIMER_NO_LIB=1
    ;
