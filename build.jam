@@ -9,13 +9,9 @@ import project ;
 
 project /boost/timer
     : common-requirements
-        <library>/boost/chrono//boost_chrono
         <library>/boost/config//boost_config
-        <library>/boost/core//boost_core
         <library>/boost/io//boost_io
         <library>/boost/predef//boost_predef
-        <library>/boost/system//boost_system
-        <library>/boost/throw_exception//boost_throw_exception
         <include>include
     ;
 
