@@ -19,10 +19,10 @@ project
 
 run ../example/auto_cpu_timer_example.cpp : : : <test-info>always_show_run_output ;
 
-run cpu_timer_info.cpp : : : <test-info>always_show_run_output <source>/boost/detail//boost_detail ;
+run cpu_timer_info.cpp : : : <test-info>always_show_run_output <library>/boost/detail//boost_detail ;
 
 run cpu_timer_test.cpp
-  : : : <test-info>always_show_run_output <source>/boost/detail//boost_detail ;
+  : : : <test-info>always_show_run_output <library>/boost/detail//boost_detail ;
 
 run ../example/timex.cpp : echo "Hello, world" : : <test-info>always_show_run_output ;
 
