@@ -9,6 +9,9 @@
 
 SOURCES = auto_timers_construction cpu_timer ;
 
+project
+    : common-requirements <library>$(boost_dependencies) ;
+
 lib boost_timer
    : ../src/$(SOURCES).cpp
    : # requirements
