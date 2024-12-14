@@ -144,7 +144,7 @@ jobs:
           - toolset: clang
             compiler: clang++-17
             cxxstd: "11,14,17,20,2b"
-            container: ubuntu:23.10
+            container: ubuntu:24.04
             os: ubuntu-latest
             install: clang-17
           - toolset: clang
